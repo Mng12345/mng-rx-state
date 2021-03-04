@@ -1,0 +1,47 @@
+{
+  "name": "mng-rx-state",
+  "version": "0.0.6",
+  "description": "use rxjs to make a react state manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx webpack serve",
+    "build": "tsc -d"
+  },
+  "keywords": [
+    "rxjs",
+    "state",
+    "manager",
+    "react"
+  ],
+  "type": "module",
+  "author": "mng12345",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/lodash": "^4.14.168",
+    "html-webpack-plugin": "^5.2.0",
+    "prettier": "^2.2.1",
+    "source-map-loader": "^2.0.1",
+    "ts-loader": "^8.0.17",
+    "typescript": "^4.1.5",
+    "webpack": "^5.23.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "@types/react-dom": "^17.0.1",
+    "lodash": "^4.17.21",
+    "mng-easy-util": "^1.4.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "rxjs": "^6.6.3"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "arrowParens": "always",
+    "parser": "typescript"
+  }
+}

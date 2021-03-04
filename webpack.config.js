@@ -1,7 +1,7 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import {join} from 'path'
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const {join} = require('path')
 
-export default {
+module.exports = {
   entry: './example/index.tsx',
   mode: 'development',
   devtool: 'cheap-module-source-map',

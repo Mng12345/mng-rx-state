@@ -1,4 +1,8 @@
 ## use rxjs to make a state manager for react hooks
+
+#### github
+https://github.com/Mng12345/mng-rx-state
+
 #### example
 
 ```typescript

@@ -3,10 +3,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useSubscribe = exports.useEvent = exports.useConstant = exports.useObservable = exports.createAtomState = exports.useStateRef = void 0;
 var react_1 = require("react");
 var rxjs_1 = require("rxjs");
+// sync state and ref automatically while calling setState
 var useStateRef = function (initValue) {
+    if (initValue instanceof Function) {
+        throw "you should avoid to use state as function";
+    }
     var _a = react_1.useState(initValue), state = _a[0], setState = _a[1];
     var ref = react_1.useRef(state);
-    return [state, setState, ref];
+    // proxy setState to update ref while calling setState
+    var setStateProxy = function (s) {
+        if (s instanceof Function) {
+            // proxy s function and update ref
+            var sProxy = function (preS) {
+                ref.current = s(preS);
+                return ref.current;
+            };
+            setState(sProxy);
+        }
+        else {
+            ref.current = s;
+            setState(s);
+        }
+    };
+    return [state, setStateProxy, ref];
 };
 exports.useStateRef = useStateRef;
 var createAtomState = function (defaultValue) {
@@ -21,7 +40,6 @@ function useObservable(_a) {
         var newSubs = new$.subscribe({
             next: function (value) {
                 setState(value);
-                ref.current = value;
             }
         });
         return function () {

@@ -1,6 +1,6 @@
 {
   "name": "mng-rx-state",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "use rxjs to make a react state manager",
   "main": "index.js",
   "scripts": {

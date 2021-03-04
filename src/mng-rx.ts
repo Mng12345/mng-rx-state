@@ -1,10 +1,28 @@
 import React, {useEffect, useRef, useState} from "react";
 import {BehaviorSubject, Observable, PartialObserver, Subject} from "rxjs";
 
+// sync state and ref automatically while calling setState
 export const useStateRef = function <T>(initValue: T): [T, React.Dispatch<React.SetStateAction<T>>, React.MutableRefObject<T>] {
+  if (initValue instanceof Function) {
+    throw `you should avoid to use state as function`
+  }
   const [state, setState] = useState(initValue)
   const ref = useRef(state)
-  return [state, setState, ref]
+  // proxy setState to update ref while calling setState
+  const setStateProxy = (s: T | ((preS: T) => T)) => {
+    if (s instanceof Function) {
+      // proxy s function and update ref
+      const sProxy = (preS: T) => {
+        ref.current = s(preS)
+        return ref.current
+      }
+      setState(sProxy)
+    } else {
+      ref.current = s
+      setState(s)
+    }
+  }
+  return [state, setStateProxy, ref]
 }
 
 export const createAtomState = function<T>(defaultValue: T) {
@@ -34,7 +52,6 @@ export function useObservable<T>({
     const newSubs = new$.subscribe({
       next(value: T) {
         setState(value)
-        ref.current = value
       }
     })
     return () => {

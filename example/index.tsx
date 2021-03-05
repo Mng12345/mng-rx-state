@@ -20,7 +20,7 @@ const defaultWife = {
 const husband$ = createAtomState<Person>(defaultHusband)
 const wife$ = createAtomState<Person>(defaultWife)
 
-function AllAge() {
+function AllAge({voidClick}: {voidClick: () => void}) {
   const [husband, husbandRef] = useObservable({
     handler: () => husband$.pipe(),
     initState: defaultHusband,
@@ -41,6 +41,7 @@ function AllAge() {
         ...wifeRef.current,
         age: wifeRef.current.age + 1,
       })
+      voidClick()
     },
   })
 
@@ -65,6 +66,12 @@ function App() {
 
   const [addHusbandAge$, addHusbandAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
   const [addWifeAge$, addWifeAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
+  const [voidClick$, voidClick] = useEvent()
+  useSubscribe(voidClick$, {
+    next() {
+      console.log(`called voidClick callback`)
+    }
+  })
 
   useSubscribe(addHusbandAge$, {
     next() {
@@ -104,7 +111,7 @@ function App() {
       </button>
       <button onClick={addWifeAge}>add wife age</button>
       <hr />
-      <AllAge />
+      <AllAge voidClick={voidClick}/>
     </div>
   )
 }

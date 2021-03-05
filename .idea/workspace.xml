@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="build cjs esm">
+    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="fix function name">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/example/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mng-rx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mng-rx.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +98,8 @@
       <option name="presentableId" value="Default" />
       <updated>1614756051932</updated>
       <workItem from="1614756053054" duration="10689000" />
-      <workItem from="1614820166296" duration="14592000" />
+      <workItem from="1614820166296" duration="16665000" />
+      <workItem from="1614912603904" duration="1075000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1614823690563</created>
@@ -134,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614842901981</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix function name">
+      <created>1614906856426</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1614906856426</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,12 +158,14 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="update readme" />
     <MESSAGE value="useStateRef" />
     <MESSAGE value="build cjs esm" />
-    <option name="LAST_COMMIT_MESSAGE" value="build cjs esm" />
+    <MESSAGE value="fix function name" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix function name" />
   </component>
 </project>

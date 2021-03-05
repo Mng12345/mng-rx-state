@@ -66,7 +66,12 @@ export function useConstant<T>(defaultValue: T) {
   return ref.current
 }
 
-export function useEvent<T>(): [Subject<T>, (e: T) => void] {
+export type NotUndefined<T> = T extends undefined ? never : T
+
+export function useEvent(): [Subject<undefined>, () => void];
+export function useEvent<T, R=NotUndefined<T>>(): [Subject<R>, (e: R) => void];
+
+export function useEvent<T>(): [Subject<T>, ((e: T) => void) | (() => void)] {
   const event$ = useConstant(new Subject<T>())
   const eventCallback = (e: T) => {
     event$.next(e)

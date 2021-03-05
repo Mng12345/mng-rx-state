@@ -11,6 +11,8 @@ export declare function useObservable<T>(options: {
     initState: T;
 }): [T, React.MutableRefObject<T>];
 export declare function useConstant<T>(defaultValue: T): T;
-export declare function useEvent<T>(): [Subject<T>, (e: T) => void];
+export declare type NotUndefined<T> = T extends undefined ? never : T;
+export declare function useEvent(): [Subject<undefined>, () => void];
+export declare function useEvent<T, R = NotUndefined<T>>(): [Subject<R>, (e: R) => void];
 export declare function useSubscribe<T>(state$: Observable<T>, observer: PartialObserver<T>): void;
 export {};

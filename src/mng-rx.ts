@@ -25,7 +25,9 @@ export function useStateRef<T>(initValue: T): [T, React.Dispatch<React.SetStateA
   return [state, setStateProxy, ref]
 }
 
-export function createAtomState<T>(defaultValue: T) {
+export function createAtomState(): BehaviorSubject<undefined>;
+export function createAtomState<T, R=NotUndefined<T>>(defaultValue: T): BehaviorSubject<R>;
+export function createAtomState<T>(defaultValue?: T) {
   return new BehaviorSubject(defaultValue)
 }
 

@@ -3,6 +3,10 @@
 #### github
 https://github.com/Mng12345/mng-rx-state
 
+#### install
+
+##### npm i mng-rx-state
+
 #### example
 
 ```typescript

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="fix 0 or undefined in useObservable initState">
+    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="add install in readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mng-rx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mng-rx.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +98,7 @@
       <updated>1614756051932</updated>
       <workItem from="1614756053054" duration="10689000" />
       <workItem from="1614820166296" duration="16665000" />
-      <workItem from="1614912603904" duration="2945000" />
+      <workItem from="1614912603904" duration="4586000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1614823690563</created>
@@ -148,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614930073227</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add install in readme">
+      <created>1614931633333</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1614931633333</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,6 +188,7 @@
     <MESSAGE value="fix function name" />
     <MESSAGE value="add void event support to useEvent" />
     <MESSAGE value="fix 0 or undefined in useObservable initState" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix 0 or undefined in useObservable initState" />
+    <MESSAGE value="add install in readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="add install in readme" />
   </component>
 </project>

@@ -1,7 +1,8 @@
 import React from "react";
 import { BehaviorSubject, Observable, PartialObserver, Subject } from "rxjs";
 export declare function useStateRef<T>(initValue: T): [T, React.Dispatch<React.SetStateAction<T>>, React.MutableRefObject<T>];
-export declare function createAtomState<T>(defaultValue: T): BehaviorSubject<T>;
+export declare function createAtomState(): BehaviorSubject<undefined>;
+export declare function createAtomState<T, R = NotUndefined<T>>(defaultValue: T): BehaviorSubject<R>;
 declare type Handler<T> = () => Observable<T>;
 export declare function useObservable<T>(options: {
     handler: Handler<T>;

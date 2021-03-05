@@ -27,20 +27,22 @@ var defaultWife = {
 };
 var husband$ = mng_rx_1.createAtomState(defaultHusband);
 var wife$ = mng_rx_1.createAtomState(defaultWife);
-function AllAge() {
-    var _a = mng_rx_1.useObservable({
+function AllAge(_a) {
+    var voidClick = _a.voidClick;
+    var _b = mng_rx_1.useObservable({
         handler: function () { return husband$.pipe(); },
         initState: defaultHusband,
-    }), husband = _a[0], husbandRef = _a[1];
-    var _b = mng_rx_1.useObservable({
+    }), husband = _b[0], husbandRef = _b[1];
+    var _c = mng_rx_1.useObservable({
         handler: function () { return wife$.pipe(); },
         initState: defaultWife,
-    }), wife = _b[0], wifeRef = _b[1];
-    var _c = mng_rx_1.useEvent(), addAllAge$ = _c[0], addAllAge = _c[1];
+    }), wife = _c[0], wifeRef = _c[1];
+    var _d = mng_rx_1.useEvent(), addAllAge$ = _d[0], addAllAge = _d[1];
     mng_rx_1.useSubscribe(addAllAge$, {
         next: function () {
             husband$.next(__assign(__assign({}, husbandRef.current), { age: husbandRef.current.age + 1 }));
             wife$.next(__assign(__assign({}, wifeRef.current), { age: wifeRef.current.age + 1 }));
+            voidClick();
         },
     });
     return (react_1.default.createElement(react_1.default.Fragment, null,
@@ -60,6 +62,12 @@ function App() {
     }), wife = _b[0], wifeRef = _b[1];
     var _c = mng_rx_1.useEvent(), addHusbandAge$ = _c[0], addHusbandAge = _c[1];
     var _d = mng_rx_1.useEvent(), addWifeAge$ = _d[0], addWifeAge = _d[1];
+    var _e = mng_rx_1.useEvent(), voidClick$ = _e[0], voidClick = _e[1];
+    mng_rx_1.useSubscribe(voidClick$, {
+        next: function () {
+            console.log("called voidClick callback");
+        }
+    });
     mng_rx_1.useSubscribe(addHusbandAge$, {
         next: function () {
             husband$.next(__assign(__assign({}, husbandRef.current), { age: husbandRef.current.age + 1 }));
@@ -88,6 +96,6 @@ function App() {
             } }, "add husband age"),
         react_1.default.createElement("button", { onClick: addWifeAge }, "add wife age"),
         react_1.default.createElement("hr", null),
-        react_1.default.createElement(AllAge, null)));
+        react_1.default.createElement(AllAge, { voidClick: voidClick })));
 }
 react_dom_1.default.render(react_1.default.createElement(App, null), document.getElementById('app'));

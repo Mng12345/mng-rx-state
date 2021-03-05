@@ -46,7 +46,7 @@ export function useObservable<T>({
   handler: Handler<T>,
   initState?: T
 }, ) {
-  const [state, setState, ref] = useStateRef<T | undefined>(initState ? initState : undefined)
+  const [state, setState, ref] = useStateRef<T | undefined>(initState !== undefined ? initState : undefined)
   const new$ = handler()
   useEffect(() => {
     const newSubs = new$.subscribe({

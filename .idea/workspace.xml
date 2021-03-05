@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="fix function name">
+    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="add void event support to useEvent">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/example/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mng-rx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mng-rx.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/example/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/example/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/example/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/example/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +99,7 @@
       <updated>1614756051932</updated>
       <workItem from="1614756053054" duration="10689000" />
       <workItem from="1614820166296" duration="16665000" />
-      <workItem from="1614912603904" duration="1075000" />
+      <workItem from="1614912603904" duration="2170000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1614823690563</created>
@@ -136,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614906856426</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add void event support to useEvent">
+      <created>1614915365355</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1614915365355</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +173,7 @@
     <MESSAGE value="useStateRef" />
     <MESSAGE value="build cjs esm" />
     <MESSAGE value="fix function name" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix function name" />
+    <MESSAGE value="add void event support to useEvent" />
+    <option name="LAST_COMMIT_MESSAGE" value="add void event support to useEvent" />
   </component>
 </project>

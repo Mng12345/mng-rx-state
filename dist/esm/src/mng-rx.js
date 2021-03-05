@@ -29,7 +29,7 @@ export function createAtomState(defaultValue) {
 }
 export function useObservable(_a) {
     var handler = _a.handler, initState = _a.initState;
-    var _b = useStateRef(initState ? initState : undefined), state = _b[0], setState = _b[1], ref = _b[2];
+    var _b = useStateRef(initState !== undefined ? initState : undefined), state = _b[0], setState = _b[1], ref = _b[2];
     var new$ = handler();
     useEffect(function () {
         var newSubs = new$.subscribe({

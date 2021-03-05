@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BehaviorSubject, Subject } from "rxjs";
 // sync state and ref automatically while calling setState
-export var useStateRef = function (initValue) {
+export function useStateRef(initValue) {
     if (initValue instanceof Function) {
         throw "you should avoid to use state as function";
     }
@@ -23,10 +23,10 @@ export var useStateRef = function (initValue) {
         }
     };
     return [state, setStateProxy, ref];
-};
-export var createAtomState = function (defaultValue) {
+}
+export function createAtomState(defaultValue) {
     return new BehaviorSubject(defaultValue);
-};
+}
 export function useObservable(_a) {
     var handler = _a.handler, initState = _a.initState;
     var _b = useStateRef(initState ? initState : undefined), state = _b[0], setState = _b[1], ref = _b[2];

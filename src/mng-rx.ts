@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {BehaviorSubject, Observable, PartialObserver, Subject} from "rxjs";
 
 // sync state and ref automatically while calling setState
-export const useStateRef = function <T>(initValue: T): [T, React.Dispatch<React.SetStateAction<T>>, React.MutableRefObject<T>] {
+export function useStateRef<T>(initValue: T): [T, React.Dispatch<React.SetStateAction<T>>, React.MutableRefObject<T>] {
   if (initValue instanceof Function) {
     throw `you should avoid to use state as function`
   }
@@ -25,7 +25,7 @@ export const useStateRef = function <T>(initValue: T): [T, React.Dispatch<React.
   return [state, setStateProxy, ref]
 }
 
-export const createAtomState = function<T>(defaultValue: T) {
+export function createAtomState<T>(defaultValue: T) {
   return new BehaviorSubject(defaultValue)
 }
 

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="useStateRef">
+    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="build cjs esm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/example/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/example/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/readme.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/mng-rx.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/mng-rx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mng-rx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mng-rx.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +104,7 @@
       <option name="presentableId" value="Default" />
       <updated>1614756051932</updated>
       <workItem from="1614756053054" duration="10689000" />
-      <workItem from="1614820166296" duration="10169000" />
+      <workItem from="1614820166296" duration="14592000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1614823690563</created>
@@ -128,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614827695766</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="build cjs esm">
+      <created>1614842901981</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1614842901981</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +161,7 @@
     <MESSAGE value="init" />
     <MESSAGE value="update readme" />
     <MESSAGE value="useStateRef" />
-    <option name="LAST_COMMIT_MESSAGE" value="useStateRef" />
+    <MESSAGE value="build cjs esm" />
+    <option name="LAST_COMMIT_MESSAGE" value="build cjs esm" />
   </component>
 </project>

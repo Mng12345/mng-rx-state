@@ -4,7 +4,7 @@ exports.useSubscribe = exports.useEvent = exports.useConstant = exports.useObser
 var react_1 = require("react");
 var rxjs_1 = require("rxjs");
 // sync state and ref automatically while calling setState
-var useStateRef = function (initValue) {
+function useStateRef(initValue) {
     if (initValue instanceof Function) {
         throw "you should avoid to use state as function";
     }
@@ -26,15 +26,15 @@ var useStateRef = function (initValue) {
         }
     };
     return [state, setStateProxy, ref];
-};
+}
 exports.useStateRef = useStateRef;
-var createAtomState = function (defaultValue) {
+function createAtomState(defaultValue) {
     return new rxjs_1.BehaviorSubject(defaultValue);
-};
+}
 exports.createAtomState = createAtomState;
 function useObservable(_a) {
     var handler = _a.handler, initState = _a.initState;
-    var _b = exports.useStateRef(initState ? initState : undefined), state = _b[0], setState = _b[1], ref = _b[2];
+    var _b = useStateRef(initState ? initState : undefined), state = _b[0], setState = _b[1], ref = _b[2];
     var new$ = handler();
     react_1.useEffect(function () {
         var newSubs = new$.subscribe({

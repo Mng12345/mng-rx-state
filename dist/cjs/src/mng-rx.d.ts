@@ -16,4 +16,5 @@ export declare type NotUndefined<T> = T extends undefined ? never : T;
 export declare function useEvent(): [Subject<undefined>, () => void];
 export declare function useEvent<T, R = NotUndefined<T>>(): [Subject<R>, (e: R) => void];
 export declare function useSubscribe<T>(state$: Observable<T>, observer: PartialObserver<T>): void;
+export declare function useLocalObservable<T>(initState: T): (T | BehaviorSubject<NotUndefined<T>> | React.MutableRefObject<T>)[];
 export {};

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useSubscribe = exports.useEvent = exports.useConstant = exports.useObservable = exports.createAtomState = exports.useStateRef = void 0;
+exports.useLocalObservable = exports.useSubscribe = exports.useEvent = exports.useConstant = exports.useObservable = exports.createAtomState = exports.useStateRef = void 0;
 var react_1 = require("react");
 var rxjs_1 = require("rxjs");
 // sync state and ref automatically while calling setState
@@ -71,3 +71,12 @@ function useSubscribe(state$, observer) {
     }, []);
 }
 exports.useSubscribe = useSubscribe;
+function useLocalObservable(initState) {
+    var stream$ = useConstant(createAtomState(initState));
+    var _a = useObservable({
+        handler: function () { return stream$.pipe(); },
+        initState: initState
+    }), value = _a[0], valueRef = _a[1];
+    return [stream$, value, valueRef];
+}
+exports.useLocalObservable = useLocalObservable;

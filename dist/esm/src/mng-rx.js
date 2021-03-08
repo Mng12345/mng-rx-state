@@ -62,3 +62,11 @@ export function useSubscribe(state$, observer) {
         };
     }, []);
 }
+export function useLocalObservable(initState) {
+    var stream$ = useConstant(createAtomState(initState));
+    var _a = useObservable({
+        handler: function () { return stream$.pipe(); },
+        initState: initState
+    }), value = _a[0], valueRef = _a[1];
+    return [stream$, value, valueRef];
+}

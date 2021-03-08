@@ -89,3 +89,12 @@ export function useSubscribe<T>(state$: Observable<T>, observer: PartialObserver
     }
   }, [])
 }
+
+export function useLocalObservable<T>(initState: T) {
+  const stream$ = useConstant(createAtomState<T>(initState))
+  const [value, valueRef] = useObservable({
+    handler: () => stream$.pipe(),
+    initState
+  })
+  return [stream$, value, valueRef]
+}

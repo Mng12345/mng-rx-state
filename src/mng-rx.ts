@@ -76,6 +76,9 @@ export function useEvent<T, R=NotUndefined<T>>(): [Subject<R>, (e: R) => void];
 export function useEvent<T>(): [Subject<T>, ((e: T) => void) | (() => void)] {
   const event$ = useConstant(new Subject<T>())
   const eventCallback = (e: T) => {
+    // fix released/nullified synthetic event
+    if ((e as any)?.persist)
+      (e as any).persist()
     event$.next(e)
   }
   return [event$, eventCallback]
@@ -90,11 +93,13 @@ export function useSubscribe<T>(state$: Observable<T>, observer: PartialObserver
   }, [])
 }
 
-export function useLocalObservable<T>(initState: T) {
-  const stream$ = useConstant(createAtomState<T>(initState))
+export function useLocalObservable<T, R=NotUndefined<T>>(initState: R): [BehaviorSubject<R>, R, React.MutableRefObject<R>] {
+  const stream$ = useConstant(createAtomState<R>(initState))
   const [value, valueRef] = useObservable({
     handler: () => stream$.pipe(),
     initState
   })
-  return [stream$, value, valueRef]
+  return [stream$ as unknown as BehaviorSubject<R>, value, valueRef]
 }
+
+

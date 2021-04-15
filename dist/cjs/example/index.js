@@ -39,7 +39,7 @@ function AllAge(_a) {
     }), wife = _c[0], wifeRef = _c[1];
     var _d = mng_rx_1.useEvent(), addAllAge$ = _d[0], addAllAge = _d[1];
     mng_rx_1.useSubscribe(addAllAge$, {
-        next: function () {
+        next: function (e) {
             husband$.next(__assign(__assign({}, husbandRef.current), { age: husbandRef.current.age + 1 }));
             wife$.next(__assign(__assign({}, wifeRef.current), { age: wifeRef.current.age + 1 }));
             voidClick();

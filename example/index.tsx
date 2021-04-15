@@ -1,6 +1,7 @@
 import React, { MouseEventHandler, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { createAtomState, useEvent, useObservable, useSubscribe } from '../src/mng-rx'
+import {sleep} from "mng-easy-util/file";
 
 type Person = {
   name: string
@@ -32,7 +33,7 @@ function AllAge({voidClick}: {voidClick: () => void}) {
 
   const [addAllAge$, addAllAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
   useSubscribe(addAllAge$, {
-    next() {
+    next(e) {
       husband$.next({
         ...husbandRef.current,
         age: husbandRef.current.age + 1,

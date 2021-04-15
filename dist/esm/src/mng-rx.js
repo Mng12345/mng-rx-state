@@ -50,6 +50,10 @@ export function useConstant(defaultValue) {
 export function useEvent() {
     var event$ = useConstant(new Subject());
     var eventCallback = function (e) {
+        var _a;
+        // fix released/nullified synthetic event
+        if ((_a = e) === null || _a === void 0 ? void 0 : _a.persist)
+            e.persist();
         event$.next(e);
     };
     return [event$, eventCallback];

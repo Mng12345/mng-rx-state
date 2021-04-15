@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="add void args for createAtomState">
+    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="add useLocalObservable">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/example/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/example/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/example/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/example/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/example/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mng-rx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mng-rx.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +48,16 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.build">
+    <configuration name="build (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/dist/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -78,6 +101,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.build" />
+        <item itemvalue="npm.build (1)" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.build:esm" />
         <item itemvalue="npm.build:cjs" />
@@ -100,7 +124,11 @@
       <workItem from="1614912603904" duration="6034000" />
       <workItem from="1615169774586" duration="609000" />
       <workItem from="1615187810832" duration="592000" />
-      <workItem from="1615210472883" duration="444000" />
+      <workItem from="1615210472883" duration="1733000" />
+      <workItem from="1615820531268" duration="723000" />
+      <workItem from="1615860720826" duration="604000" />
+      <workItem from="1616396816046" duration="1068000" />
+      <workItem from="1618470830814" duration="1682000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1614823690563</created>
@@ -165,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614934151957</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add useLocalObservable">
+      <created>1615211169136</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1615211169136</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +234,7 @@
     <MESSAGE value="fix 0 or undefined in useObservable initState" />
     <MESSAGE value="add install in readme" />
     <MESSAGE value="add void args for createAtomState" />
-    <option name="LAST_COMMIT_MESSAGE" value="add void args for createAtomState" />
+    <MESSAGE value="add useLocalObservable" />
+    <option name="LAST_COMMIT_MESSAGE" value="add useLocalObservable" />
   </component>
 </project>

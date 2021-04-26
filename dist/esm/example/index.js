@@ -9,9 +9,9 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { createAtomState, useEvent, useObservable, useSubscribe } from '../src/mng-rx';
+import { createAtomState, MngRxState, useEvent, useObservable, useSubscribe } from '../src/mng-rx';
 var defaultHusband = {
     name: 'zm',
     age: 27,
@@ -20,8 +20,16 @@ var defaultWife = {
     name: 'zl',
     age: 28,
 };
-var husband$ = createAtomState(defaultHusband);
-var wife$ = createAtomState(defaultWife);
+var husband$ = createAtomState({
+    initState: defaultHusband,
+    key: 'husband$',
+    useTimeTravel: true
+});
+var wife$ = createAtomState({
+    initState: defaultWife,
+    key: 'wife$',
+    useTimeTravel: true
+});
 function AllAge(_a) {
     var voidClick = _a.voidClick;
     var _b = useObservable({
@@ -73,6 +81,10 @@ function App() {
             wife$.next(__assign(__assign({}, wifeRef.current), { age: wifeRef.current.age + 1 }));
         },
     });
+    useEffect(function () {
+        // init the state manager
+        MngRxState.init();
+    }, []);
     return (React.createElement("div", null,
         "husband: ",
         husband.name,
@@ -91,6 +103,13 @@ function App() {
             } }, "add husband age"),
         React.createElement("button", { onClick: addWifeAge }, "add wife age"),
         React.createElement("hr", null),
-        React.createElement(AllAge, { voidClick: voidClick })));
+        React.createElement(AllAge, { voidClick: voidClick }),
+        React.createElement("hr", null),
+        React.createElement("div", { style: {
+                display: 'flex',
+                marginTop: 10
+            } },
+            React.createElement("button", { onClick: function () { return MngRxState.goPast(); }, style: { marginRight: 10 } }, "prev"),
+            React.createElement("button", { onClick: function () { return MngRxState.goFuture(); } }, "next"))));
 }
 ReactDOM.render(React.createElement(App, null), document.getElementById('app'));

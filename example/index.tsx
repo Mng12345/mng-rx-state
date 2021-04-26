@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { createAtomState, useEvent, useObservable, useSubscribe } from '../src/mng-rx'
+import {createAtomState, MngRxState, useEvent, useObservable, useSubscribe} from '../src/mng-rx'
 import {sleep} from "mng-easy-util/file";
 
 type Person = {
@@ -18,8 +18,16 @@ const defaultWife = {
   age: 28,
 }
 
-const husband$ = createAtomState<Person>(defaultHusband)
-const wife$ = createAtomState<Person>(defaultWife)
+const husband$ = createAtomState<Person>({
+  initState: defaultHusband,
+  key: 'husband$',
+  useTimeTravel: true
+})
+const wife$ = createAtomState<Person>({
+  initState: defaultWife,
+  key: 'wife$',
+  useTimeTravel: true
+})
 
 function AllAge({voidClick}: {voidClick: () => void}) {
   const [husband, husbandRef] = useObservable({
@@ -92,6 +100,11 @@ function App() {
     },
   })
 
+  useEffect(() => {
+    // init the state manager
+    MngRxState.init()
+  }, [])
+
   return (
     <div>
       husband: {husband.name}
@@ -113,6 +126,14 @@ function App() {
       <button onClick={addWifeAge}>add wife age</button>
       <hr />
       <AllAge voidClick={voidClick}/>
+      <hr />
+      <div style={{
+        display: 'flex',
+        marginTop: 10
+      }}>
+        <button onClick={() => MngRxState.goPast()} style={{ marginRight: 10}}>prev</button>
+        <button onClick={() => MngRxState.goFuture()}>next</button>
+      </div>
     </div>
   )
 }

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="add useLocalObservable">
+    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="fix react released/nullified synthetic event">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/example/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/example/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/example/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/example/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/example/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/example/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/example/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/example/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/dist/readme.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/example/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mng-rx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mng-rx.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +24,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="c6blvlmj" />
   </component>
   <component name="ProjectId" id="1pElIb81hI2fL8WTaDqixaMo8w2" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -38,6 +41,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/dist" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="E:\IdeaProjects\mng-rx-state\node_modules\prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="E:\IdeaProjects\mng-rx-state\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -101,10 +105,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.build" />
-        <item itemvalue="npm.build (1)" />
-        <item itemvalue="npm.dev" />
         <item itemvalue="npm.build:esm" />
         <item itemvalue="npm.build:cjs" />
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.build (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -128,7 +132,8 @@
       <workItem from="1615820531268" duration="723000" />
       <workItem from="1615860720826" duration="604000" />
       <workItem from="1616396816046" duration="1068000" />
-      <workItem from="1618470830814" duration="1682000" />
+      <workItem from="1618470830814" duration="1768000" />
+      <workItem from="1619402320869" duration="11656000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1614823690563</created>
@@ -200,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615211169136</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix react released/nullified synthetic event">
+      <created>1618477970524</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1618477970524</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +247,7 @@
     <MESSAGE value="add install in readme" />
     <MESSAGE value="add void args for createAtomState" />
     <MESSAGE value="add useLocalObservable" />
-    <option name="LAST_COMMIT_MESSAGE" value="add useLocalObservable" />
+    <MESSAGE value="fix react released/nullified synthetic event" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix react released/nullified synthetic event" />
   </component>
 </project>

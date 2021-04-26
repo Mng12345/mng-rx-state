@@ -1,6 +1,6 @@
 {
   "name": "mng-rx-state",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "use rxjs to make a react state manager",
   "main": "index.js",
   "scripts": {
@@ -35,7 +35,11 @@
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/uuid": "^8.3.0",
+    "chalk": "^4.1.1",
+    "uuid": "^3.4.0"
+  },
   "prettier": {
     "printWidth": 120,
     "semi": false,

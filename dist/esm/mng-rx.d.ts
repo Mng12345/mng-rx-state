@@ -1,5 +1,8 @@
-import React from "react";
-import { BehaviorSubject, Observable, PartialObserver, Subject } from "rxjs";
+import React from 'react';
+import { BehaviorSubject, Observable, PartialObserver, Subject } from 'rxjs';
+/**
+ * @deprecated
+ */
 export declare namespace MngRxState {
     const stateMap: Map<string, BehaviorSubject<any>>;
     const goPast: () => void;

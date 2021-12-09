@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="fix react released/nullified synthetic event">
+    <list default="true" id="720ee238-0439-480e-be9b-98a545658645" name="Default Changelist" comment="add state time travel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/example/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/example/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/src/mng-rx.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/cjs/src/mng-rx.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/example/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/example/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/src/mng-rx.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/src/mng-rx.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/dist/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/dist/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/example/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mng-rx.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mng-rx.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +120,10 @@
       <workItem from="1615860720826" duration="604000" />
       <workItem from="1616396816046" duration="1068000" />
       <workItem from="1618470830814" duration="1768000" />
-      <workItem from="1619402320869" duration="11656000" />
+      <workItem from="1619402320869" duration="15013000" />
+      <workItem from="1619427366108" duration="39000" />
+      <workItem from="1620131837425" duration="1085000" />
+      <workItem from="1620377761394" duration="555000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1614823690563</created>
@@ -212,7 +202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618477970524</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add state time travel">
+      <created>1619421511830</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1619421511830</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,6 +245,7 @@
     <MESSAGE value="add void args for createAtomState" />
     <MESSAGE value="add useLocalObservable" />
     <MESSAGE value="fix react released/nullified synthetic event" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix react released/nullified synthetic event" />
+    <MESSAGE value="add state time travel" />
+    <option name="LAST_COMMIT_MESSAGE" value="add state time travel" />
   </component>
 </project>

@@ -1,7 +1,8 @@
 import React, { MouseEventHandler, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import {createAtomState, MngRxState, useEvent, useObservable, useSubscribe} from '../src/mng-rx'
-import {sleep} from "mng-easy-util/file";
+import * as mngrx from '../src'
+import { createAtomState, useEvent, useAtomState, useSubscribe } from '../src'
+import { sleep } from 'mng-easy-util/cjs/sleep'
 
 type Person = {
   name: string
@@ -21,32 +22,26 @@ const defaultWife = {
 const husband$ = createAtomState<Person>({
   initState: defaultHusband,
   key: 'husband$',
-  useTimeTravel: true
+  useTimeTravel: true,
 })
 const wife$ = createAtomState<Person>({
   initState: defaultWife,
   key: 'wife$',
-  useTimeTravel: true
+  useTimeTravel: true,
 })
 
-function AllAge({voidClick}: {voidClick: () => void}) {
-  const [husband, husbandRef] = useObservable({
-    handler: () => husband$.pipe(),
-    initState: defaultHusband,
-  })
-  const [wife, wifeRef] = useObservable({
-    handler: () => wife$.pipe(),
-    initState: defaultWife,
-  })
+function AllAge({ voidClick }: { voidClick: () => void }) {
+  const [husband, setHusband, husbandRef] = useAtomState(husband$)
+  const [wife, setWife, wifeRef] = useAtomState(wife$)
 
   const [addAllAge$, addAllAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
   useSubscribe(addAllAge$, {
     next(e) {
-      husband$.next({
+      husband$.$.next({
         ...husbandRef.current,
         age: husbandRef.current.age + 1,
       })
-      wife$.next({
+      wife$.$.next({
         ...wifeRef.current,
         age: wifeRef.current.age + 1,
       })
@@ -64,14 +59,8 @@ function AllAge({voidClick}: {voidClick: () => void}) {
 }
 
 function App() {
-  const [husband, husbandRef] = useObservable({
-    handler: () => husband$.pipe(),
-    initState: defaultHusband,
-  })
-  const [wife, wifeRef] = useObservable({
-    handler: () => wife$.pipe(),
-    initState: defaultWife,
-  })
+  const [husband, setHusband, husbandRef] = useAtomState(husband$)
+  const [wife, setWife, wifeRef] = useAtomState(wife$)
 
   const [addHusbandAge$, addHusbandAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
   const [addWifeAge$, addWifeAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
@@ -79,12 +68,12 @@ function App() {
   useSubscribe(voidClick$, {
     next() {
       console.log(`called voidClick callback`)
-    }
+    },
   })
 
   useSubscribe(addHusbandAge$, {
     next() {
-      husband$.next({
+      husband$.$.next({
         ...husbandRef.current,
         age: husbandRef.current.age + 1,
       })
@@ -93,7 +82,7 @@ function App() {
 
   useSubscribe(addWifeAge$, {
     next() {
-      wife$.next({
+      wife$.$.next({
         ...wifeRef.current,
         age: wifeRef.current.age + 1,
       })
@@ -102,7 +91,7 @@ function App() {
 
   useEffect(() => {
     // init the state manager
-    MngRxState.init()
+    mngrx.init()
   }, [])
 
   return (
@@ -125,14 +114,18 @@ function App() {
       </button>
       <button onClick={addWifeAge}>add wife age</button>
       <hr />
-      <AllAge voidClick={voidClick}/>
+      <AllAge voidClick={voidClick} />
       <hr />
-      <div style={{
-        display: 'flex',
-        marginTop: 10
-      }}>
-        <button onClick={() => MngRxState.goPast()} style={{ marginRight: 10}}>prev</button>
-        <button onClick={() => MngRxState.goFuture()}>next</button>
+      <div
+        style={{
+          display: 'flex',
+          marginTop: 10,
+        }}
+      >
+        <button onClick={() => mngrx.goPast()} style={{ marginRight: 10 }}>
+          prev
+        </button>
+        <button onClick={() => mngrx.goFuture()}>next</button>
       </div>
     </div>
   )

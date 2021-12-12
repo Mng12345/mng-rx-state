@@ -1,0 +1,5 @@
+[0m2021.12.10 15:34:09 INFO  Started: Metals version 0.10.9 in workspace 'E:\IdeaProjects\mng-rx-state' for client Visual Studio Code 1.62.3.[0m
+[0m2021.12.10 15:34:10 INFO  time: initialize in 1.14s[0m
+[0m2021.12.10 15:34:13 WARN  Build server is not auto-connectable.[0m
+[0m2021.12.10 15:34:13 WARN  no build tool detected in workspace 'E:\IdeaProjects\mng-rx-state'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.12.10 21:41:56 INFO  shutting down Metals[0m

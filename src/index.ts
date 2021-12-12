@@ -2,11 +2,13 @@ import chalk from 'chalk'
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 import { LinkedNode } from 'mng-easy-util/cjs/algorithm/linked'
 import { BehaviorSubject, combineLatest, Observable, PartialObserver, Subject } from 'rxjs'
+import { Option } from 'mng-easy-util/cjs/options'
 
 class Mutables {
   static timeTraveling = false
-  static initOnce = false
-  static currentState = new LinkedNode(new Map<string, any>())
+  static initDone = false
+  static currentState = Option.empty<LinkedNode<Map<string, any>>>()
+  static doSnapshot = false
 }
 
 class Immutables {
@@ -19,6 +21,14 @@ type AtomState<T> = {
   $: BehaviorSubject<T>
   default: T
 }
+
+// the state of travel machine
+export const travelMachineState = createAtomState({
+  initState: {
+    canGoToFuture: false,
+    canGoToPast: false,
+  },
+})
 
 function getAllStatesInMap(): [string, BehaviorSubject<any>][] {
   const entries = Immutables.stateMap.entries()
@@ -33,24 +43,31 @@ function getAllStatesInMap(): [string, BehaviorSubject<any>][] {
 
 // time travel!
 export function goPast() {
-  if (Mutables.currentState.prev) {
-    Mutables.currentState = Mutables.currentState.prev
-    Immutables.stateChangeFromUser$.next(false)
+  if (Mutables.currentState.hasValue()) {
+    const currentState = Mutables.currentState.unwrap()
+    const prevState = currentState.prev
+    if (prevState !== null) {
+      Mutables.currentState = Option.of(prevState)
+      Immutables.stateChangeFromUser$.next(false)
+    }
   }
 }
 export function goFuture() {
-  if (Mutables.currentState.next) {
-    Mutables.currentState = Mutables.currentState.next
-    Immutables.stateChangeFromUser$.next(false)
+  if (Mutables.currentState.hasValue()) {
+    const currentState = Mutables.currentState.unwrap()
+    const nextState = currentState.next
+    if (nextState !== null) {
+      Mutables.currentState = Option.of(nextState)
+      Immutables.stateChangeFromUser$.next(false)
+    }
   }
 }
 // need call this function before you application started
 export function init() {
-  if (Mutables.initOnce) {
+  if (Mutables.initDone) {
     console.log(chalk.yellowBright(`the init api can only be called once!`))
     return
   }
-  Mutables.initOnce = true
   const timeTravelStates = getAllStatesInMap()
 
   const stateObservables = timeTravelStates.map((state: [string, BehaviorSubject<any>]) => state[1])
@@ -67,29 +84,56 @@ export function init() {
         timeTravelValues.forEach((value: any, index: number) => {
           newCurrentState.value.set(timeTravelStates[index][0], value)
         })
-        Mutables.currentState.addNode(newCurrentState)
-        Mutables.currentState = newCurrentState
+        if (Mutables.doSnapshot) {
+          if (Mutables.currentState.hasValue()) {
+            const currentState = Mutables.currentState.unwrap()
+            currentState.addNode(newCurrentState)
+            Mutables.currentState = Option.of(newCurrentState)
+          } else {
+            Mutables.currentState = Option.of(newCurrentState)
+          }
+          // stop doing snapshot
+          Mutables.doSnapshot = false
+        }
+        // notify timeTravelMachineState, make sure that the init is done
+        if (Mutables.initDone) {
+          travelMachineState.$.next({
+            canGoToFuture: false,
+            canGoToPast: true,
+          })
+        }
       } else {
         // start time travel
         Mutables.timeTraveling = true
         // state change from time travel
-        const entries = Mutables.currentState.value.entries()
-        for (let index = 0; ; index++) {
-          const entry = entries.next()
-          if (entry.done) break
-          const [key, value] = entry.value
-          // update the changed state
-          if (value !== values[index]) {
-            Immutables.stateMap.get(key)!.next(value)
+        if (Mutables.currentState.hasValue()) {
+          const entries = Mutables.currentState.unwrap().value.entries()
+          for (let index = 0; ; index++) {
+            const entry = entries.next()
+            if (entry.done) break
+            const [key, value] = entry.value
+            // update the changed state
+            if (value !== values[index]) {
+              Immutables.stateMap.get(key)!.next(value)
+            }
           }
         }
         // after state change complete, make state change from user again
         Immutables.stateChangeFromUser$.next(true)
         // end time travel
         Mutables.timeTraveling = false
+        // update timeTravelMachineState when call goPast or goFuture
+        if (Mutables.currentState.hasValue()) {
+          travelMachineState.$.next({
+            canGoToFuture: Mutables.currentState.unwrap().next !== null,
+            canGoToPast: Mutables.currentState.unwrap().prev !== null,
+          })
+        }
       }
     },
   })
+  // init done
+  Mutables.initDone = true
 }
 
 // sync state and ref automatically while calling setState
@@ -236,4 +280,8 @@ export function useLocalObservable<T>(initState: T): [BehaviorSubject<T>, T, Rea
   )
   const [value, setValue, valueRef] = useAtomState(stream)
   return [stream.$, value, valueRef]
+}
+
+export function snapshot() {
+  Mutables.doSnapshot = true
 }

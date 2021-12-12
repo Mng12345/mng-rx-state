@@ -7,12 +7,14 @@ import chalk from 'chalk';
 import { useEffect, useRef, useState } from 'react';
 import { LinkedNode } from 'mng-easy-util/cjs/algorithm/linked';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { Option } from 'mng-easy-util/cjs/options';
 var Mutables = /** @class */ (function () {
     function Mutables() {
     }
     Mutables.timeTraveling = false;
-    Mutables.initOnce = false;
-    Mutables.currentState = new LinkedNode(new Map());
+    Mutables.initDone = false;
+    Mutables.currentState = Option.empty();
+    Mutables.doSnapshot = false;
     return Mutables;
 }());
 var Immutables = /** @class */ (function () {
@@ -23,6 +25,13 @@ var Immutables = /** @class */ (function () {
     Immutables.stateChangeFromUser$ = new BehaviorSubject(true);
     return Immutables;
 }());
+// the state of travel machine
+export var travelMachineState = createAtomState({
+    initState: {
+        canGoToFuture: false,
+        canGoToPast: false,
+    },
+});
 function getAllStatesInMap() {
     var entries = Immutables.stateMap.entries();
     var result = [];
@@ -36,24 +45,31 @@ function getAllStatesInMap() {
 }
 // time travel!
 export function goPast() {
-    if (Mutables.currentState.prev) {
-        Mutables.currentState = Mutables.currentState.prev;
-        Immutables.stateChangeFromUser$.next(false);
+    if (Mutables.currentState.hasValue()) {
+        var currentState = Mutables.currentState.unwrap();
+        var prevState = currentState.prev;
+        if (prevState !== null) {
+            Mutables.currentState = Option.of(prevState);
+            Immutables.stateChangeFromUser$.next(false);
+        }
     }
 }
 export function goFuture() {
-    if (Mutables.currentState.next) {
-        Mutables.currentState = Mutables.currentState.next;
-        Immutables.stateChangeFromUser$.next(false);
+    if (Mutables.currentState.hasValue()) {
+        var currentState = Mutables.currentState.unwrap();
+        var nextState = currentState.next;
+        if (nextState !== null) {
+            Mutables.currentState = Option.of(nextState);
+            Immutables.stateChangeFromUser$.next(false);
+        }
     }
 }
 // need call this function before you application started
 export function init() {
-    if (Mutables.initOnce) {
+    if (Mutables.initDone) {
         console.log(chalk.yellowBright("the init api can only be called once!"));
         return;
     }
-    Mutables.initOnce = true;
     var timeTravelStates = getAllStatesInMap();
     var stateObservables = timeTravelStates.map(function (state) { return state[1]; });
     // automatically record the change of state
@@ -70,31 +86,59 @@ export function init() {
                 timeTravelValues.forEach(function (value, index) {
                     newCurrentState.value.set(timeTravelStates[index][0], value);
                 });
-                Mutables.currentState.addNode(newCurrentState);
-                Mutables.currentState = newCurrentState;
+                if (Mutables.doSnapshot) {
+                    if (Mutables.currentState.hasValue()) {
+                        var currentState = Mutables.currentState.unwrap();
+                        currentState.addNode(newCurrentState);
+                        Mutables.currentState = Option.of(newCurrentState);
+                    }
+                    else {
+                        Mutables.currentState = Option.of(newCurrentState);
+                    }
+                    // stop doing snapshot
+                    Mutables.doSnapshot = false;
+                }
+                // notify timeTravelMachineState, make sure that the init is done
+                if (Mutables.initDone) {
+                    travelMachineState.$.next({
+                        canGoToFuture: false,
+                        canGoToPast: true,
+                    });
+                }
             }
             else {
                 // start time travel
                 Mutables.timeTraveling = true;
                 // state change from time travel
-                var entries = Mutables.currentState.value.entries();
-                for (var index = 0;; index++) {
-                    var entry = entries.next();
-                    if (entry.done)
-                        break;
-                    var _a = entry.value, key = _a[0], value = _a[1];
-                    // update the changed state
-                    if (value !== values[index]) {
-                        Immutables.stateMap.get(key).next(value);
+                if (Mutables.currentState.hasValue()) {
+                    var entries = Mutables.currentState.unwrap().value.entries();
+                    for (var index = 0;; index++) {
+                        var entry = entries.next();
+                        if (entry.done)
+                            break;
+                        var _a = entry.value, key = _a[0], value = _a[1];
+                        // update the changed state
+                        if (value !== values[index]) {
+                            Immutables.stateMap.get(key).next(value);
+                        }
                     }
                 }
                 // after state change complete, make state change from user again
                 Immutables.stateChangeFromUser$.next(true);
                 // end time travel
                 Mutables.timeTraveling = false;
+                // update timeTravelMachineState when call goPast or goFuture
+                if (Mutables.currentState.hasValue()) {
+                    travelMachineState.$.next({
+                        canGoToFuture: Mutables.currentState.unwrap().next !== null,
+                        canGoToPast: Mutables.currentState.unwrap().prev !== null,
+                    });
+                }
             }
         },
     });
+    // init done
+    Mutables.initDone = true;
 }
 // sync state and ref automatically while calling setState
 export function useStateRef(initValue) {
@@ -229,4 +273,7 @@ export function useLocalObservable(initState) {
     });
     var _a = useAtomState(stream), value = _a[0], setValue = _a[1], valueRef = _a[2];
     return [stream.$, value, valueRef];
+}
+export function snapshot() {
+    Mutables.doSnapshot = true;
 }

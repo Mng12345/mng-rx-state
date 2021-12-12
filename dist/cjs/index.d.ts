@@ -4,6 +4,10 @@ declare type AtomState<T> = {
     $: BehaviorSubject<T>;
     default: T;
 };
+export declare const travelMachineState: AtomState<{
+    canGoToFuture: boolean;
+    canGoToPast: boolean;
+}>;
 export declare function goPast(): void;
 export declare function goFuture(): void;
 export declare function init(): void;
@@ -28,4 +32,5 @@ export declare function useEvent(): [Subject<undefined>, () => void];
 export declare function useEvent<T, R = NotUndefined<T>>(): [Subject<R>, (e: R) => void];
 export declare function useSubscribe<T>(state$: Observable<T>, observer: PartialObserver<T>): void;
 export declare function useLocalObservable<T>(initState: T): [BehaviorSubject<T>, T, React.MutableRefObject<T>];
+export declare function snapshot(): void;
 export {};

@@ -1,7 +1,7 @@
 import React, { MouseEventHandler, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import * as mngrx from '../src'
-import { createAtomState, useEvent, useAtomState, useSubscribe } from '../src'
+import { createAtomState, useEvent, useAtomState, useSubscribe, travelMachineState } from '../src'
 import { sleep } from 'mng-easy-util/cjs/sleep'
 
 type Person = {
@@ -61,6 +61,7 @@ function AllAge({ voidClick }: { voidClick: () => void }) {
 function App() {
   const [husband, setHusband, husbandRef] = useAtomState(husband$)
   const [wife, setWife, wifeRef] = useAtomState(wife$)
+  const [travelMachine, setTravelMachine, travelMachineRef] = useAtomState(travelMachineState)
 
   const [addHusbandAge$, addHusbandAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
   const [addWifeAge$, addWifeAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
@@ -122,10 +123,21 @@ function App() {
           marginTop: 10,
         }}
       >
-        <button onClick={() => mngrx.goPast()} style={{ marginRight: 10 }}>
+        <button
+          onClick={() => mngrx.goPast()}
+          style={{ marginRight: 10, cursor: travelMachine.canGoToPast ? 'pointer' : 'not-allowed' }}
+        >
           prev
         </button>
-        <button onClick={() => mngrx.goFuture()}>next</button>
+        <button
+          onClick={() => mngrx.goFuture()}
+          style={{ marginRight: 10, cursor: travelMachine.canGoToFuture ? 'pointer' : 'not-allowed' }}
+        >
+          next
+        </button>
+        <button onClick={() => mngrx.snapshot()} style={{ cursor: 'pointer' }}>
+          snapshot
+        </button>
       </div>
     </div>
   )

@@ -96,12 +96,9 @@ function init() {
                     newCurrentState.set(timeTravelStates[index][0], value);
                 });
                 Mutables.currentState = options_1.Option.of(newCurrentState);
-                // notify timeTravelMachineState, make sure that the init is done
-                if (Mutables.initDone) {
-                    exports.travelMachineState.$.next({
-                        canGoToFuture: false,
-                        canGoToPast: true,
-                    });
+                // record the first state into snapshot TODO first should not be clickable
+                if (Mutables.currentSnapshot.isEmpty()) {
+                    snapshot();
                 }
             }
             else {
@@ -297,6 +294,11 @@ function snapshot() {
             Mutables.currentStateNode = options_1.Option.of(new linked_1.LinkedNode(Mutables.currentState.unwrap()));
         }
         Mutables.currentSnapshot = options_1.Option.of(Mutables.currentState.unwrap());
+        // notify timeTravelMachineState, make sure that the init is done
+        exports.travelMachineState.$.next({
+            canGoToFuture: Mutables.currentStateNode.unwrap().next !== null,
+            canGoToPast: Mutables.currentStateNode.unwrap().prev !== null,
+        });
     }
 }
 exports.snapshot = snapshot;

@@ -10,6 +10,7 @@ class Mutables {
   static currentStateNode = Option.empty<LinkedNode<Map<string, any>>>()
   static currentState = Option.empty<Map<string, any>>()
   static currentSnapshot = Option.empty<Map<string, any>>()
+  static taskSnapshot = false
 }
 
 class Immutables {
@@ -89,6 +90,11 @@ export function init() {
         // record the first state into snapshot TODO first should not be clickable
         if (Mutables.currentSnapshot.isEmpty()) {
           snapshot()
+        }
+        if (Mutables.taskSnapshot) {
+          console.log(`do snapshot`)
+          snapshot()
+          Mutables.taskSnapshot = false
         }
       } else {
         // start time travel
@@ -201,11 +207,14 @@ function isFunction(value: any): value is Function {
   return typeof value === 'function'
 }
 
-export function useAtomState<T>(atomState: AtomState<T>): [T, Dispatch<SetStateAction<T>>, MutableRefObject<T>] {
+type SetStateProxy<T> = (value: T | ((preState: T) => T), taskSnapshot?: boolean) => void
+
+export function useAtomState<T>(atomState: AtomState<T>): [T, SetStateProxy<T>, MutableRefObject<T>] {
   const [state, setState, ref] = useStateRef(atomState.default)
   const new$ = atomState.$.pipe()
   // use new$.next replace setState
-  function setStateProxy(value: T | ((preState: T) => T)) {
+  function setStateProxy(value: T | ((preState: T) => T), taskSnapshot: boolean = false) {
+    Mutables.taskSnapshot = taskSnapshot
     if (isFunction(value)) {
       const newValue = value(ref.current)
       atomState.$.next(newValue)

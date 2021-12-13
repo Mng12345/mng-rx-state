@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, SetStateAction } from 'react';
+import { MutableRefObject } from 'react';
 import { BehaviorSubject, Observable, PartialObserver, Subject } from 'rxjs';
 declare type AtomState<T> = {
     $: BehaviorSubject<T>;
@@ -24,7 +24,8 @@ export declare function createAtomState<T>(options: {
     key: string;
     useTimeTravel: boolean;
 }): AtomState<T>;
-export declare function useAtomState<T>(atomState: AtomState<T>): [T, Dispatch<SetStateAction<T>>, MutableRefObject<T>];
+declare type SetStateProxy<T> = (value: T | ((preState: T) => T), taskSnapshot?: boolean) => void;
+export declare function useAtomState<T>(atomState: AtomState<T>): [T, SetStateProxy<T>, MutableRefObject<T>];
 export declare function useConstant<T>(constructor: () => T): T;
 export declare function useConstant<T>(defaultValue: T): T;
 export declare type NotUndefined<T> = T extends undefined ? never : T;

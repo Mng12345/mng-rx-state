@@ -22,6 +22,7 @@ var Mutables = /** @class */ (function () {
     Mutables.currentStateNode = options_1.Option.empty();
     Mutables.currentState = options_1.Option.empty();
     Mutables.currentSnapshot = options_1.Option.empty();
+    Mutables.taskSnapshot = false;
     return Mutables;
 }());
 var Immutables = /** @class */ (function () {
@@ -99,6 +100,11 @@ function init() {
                 // record the first state into snapshot TODO first should not be clickable
                 if (Mutables.currentSnapshot.isEmpty()) {
                     snapshot();
+                }
+                if (Mutables.taskSnapshot) {
+                    console.log("do snapshot");
+                    snapshot();
+                    Mutables.taskSnapshot = false;
                 }
             }
             else {
@@ -216,7 +222,9 @@ function useAtomState(atomState) {
     var _a = useStateRef(atomState.default), state = _a[0], setState = _a[1], ref = _a[2];
     var new$ = atomState.$.pipe();
     // use new$.next replace setState
-    function setStateProxy(value) {
+    function setStateProxy(value, taskSnapshot) {
+        if (taskSnapshot === void 0) { taskSnapshot = false; }
+        Mutables.taskSnapshot = taskSnapshot;
         if (isFunction(value)) {
             var newValue = value(ref.current);
             atomState.$.next(newValue);

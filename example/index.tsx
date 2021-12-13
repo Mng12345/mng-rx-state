@@ -37,10 +37,13 @@ function AllAge({ voidClick }: { voidClick: () => void }) {
   const [addAllAge$, addAllAge] = useEvent<React.MouseEvent<HTMLButtonElement>>()
   useSubscribe(addAllAge$, {
     next(e) {
-      husband$.$.next({
-        ...husbandRef.current,
-        age: husbandRef.current.age + 1,
-      })
+      setHusband(
+        {
+          ...husbandRef.current,
+          age: husbandRef.current.age + 1,
+        },
+        false,
+      )
       wife$.$.next({
         ...wifeRef.current,
         age: wifeRef.current.age + 1,
@@ -74,10 +77,13 @@ function App() {
 
   useSubscribe(addHusbandAge$, {
     next() {
-      husband$.$.next({
-        ...husbandRef.current,
-        age: husbandRef.current.age + 1,
-      })
+      setHusband(
+        {
+          ...husbandRef.current,
+          age: husbandRef.current.age + 1,
+        },
+        true,
+      )
     },
   })
 

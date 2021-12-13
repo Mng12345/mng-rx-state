@@ -13,8 +13,9 @@ var Mutables = /** @class */ (function () {
     }
     Mutables.timeTraveling = false;
     Mutables.initDone = false;
+    Mutables.currentStateNode = Option.empty();
     Mutables.currentState = Option.empty();
-    Mutables.doSnapshot = false;
+    Mutables.currentSnapshot = Option.empty();
     return Mutables;
 }());
 var Immutables = /** @class */ (function () {
@@ -45,21 +46,21 @@ function getAllStatesInMap() {
 }
 // time travel!
 export function goPast() {
-    if (Mutables.currentState.hasValue()) {
-        var currentState = Mutables.currentState.unwrap();
+    if (Mutables.currentStateNode.hasValue()) {
+        var currentState = Mutables.currentStateNode.unwrap();
         var prevState = currentState.prev;
         if (prevState !== null) {
-            Mutables.currentState = Option.of(prevState);
+            Mutables.currentStateNode = Option.of(prevState);
             Immutables.stateChangeFromUser$.next(false);
         }
     }
 }
 export function goFuture() {
-    if (Mutables.currentState.hasValue()) {
-        var currentState = Mutables.currentState.unwrap();
+    if (Mutables.currentStateNode.hasValue()) {
+        var currentState = Mutables.currentStateNode.unwrap();
         var nextState = currentState.next;
         if (nextState !== null) {
-            Mutables.currentState = Option.of(nextState);
+            Mutables.currentStateNode = Option.of(nextState);
             Immutables.stateChangeFromUser$.next(false);
         }
     }
@@ -79,25 +80,14 @@ export function init() {
             if (Mutables.timeTraveling)
                 return;
             // update currentState
-            var newCurrentState = new LinkedNode(new Map());
+            var newCurrentState = new Map();
             var timeTravelValues = values.slice(0, values.length - 1);
             var stateChangeFromUser = values[values.length - 1];
             if (stateChangeFromUser) {
                 timeTravelValues.forEach(function (value, index) {
-                    newCurrentState.value.set(timeTravelStates[index][0], value);
+                    newCurrentState.set(timeTravelStates[index][0], value);
                 });
-                if (Mutables.doSnapshot) {
-                    if (Mutables.currentState.hasValue()) {
-                        var currentState = Mutables.currentState.unwrap();
-                        currentState.addNode(newCurrentState);
-                        Mutables.currentState = Option.of(newCurrentState);
-                    }
-                    else {
-                        Mutables.currentState = Option.of(newCurrentState);
-                    }
-                    // stop doing snapshot
-                    Mutables.doSnapshot = false;
-                }
+                Mutables.currentState = Option.of(newCurrentState);
                 // notify timeTravelMachineState, make sure that the init is done
                 if (Mutables.initDone) {
                     travelMachineState.$.next({
@@ -110,8 +100,8 @@ export function init() {
                 // start time travel
                 Mutables.timeTraveling = true;
                 // state change from time travel
-                if (Mutables.currentState.hasValue()) {
-                    var entries = Mutables.currentState.unwrap().value.entries();
+                if (Mutables.currentStateNode.hasValue()) {
+                    var entries = Mutables.currentStateNode.unwrap().value.entries();
                     for (var index = 0;; index++) {
                         var entry = entries.next();
                         if (entry.done)
@@ -128,10 +118,10 @@ export function init() {
                 // end time travel
                 Mutables.timeTraveling = false;
                 // update timeTravelMachineState when call goPast or goFuture
-                if (Mutables.currentState.hasValue()) {
+                if (Mutables.currentStateNode.hasValue()) {
                     travelMachineState.$.next({
-                        canGoToFuture: Mutables.currentState.unwrap().next !== null,
-                        canGoToPast: Mutables.currentState.unwrap().prev !== null,
+                        canGoToFuture: Mutables.currentStateNode.unwrap().next !== null,
+                        canGoToPast: Mutables.currentStateNode.unwrap().prev !== null,
                     });
                 }
             }
@@ -275,5 +265,21 @@ export function useLocalObservable(initState) {
     return [stream.$, value, valueRef];
 }
 export function snapshot() {
-    Mutables.doSnapshot = true;
+    // exit when undering time traveling or Mutables.currentState is empty
+    if (Mutables.timeTraveling || Mutables.currentState.isEmpty()) {
+        return;
+    }
+    if (Mutables.currentSnapshot.isEmpty() || Mutables.currentSnapshot.unwrap() !== Mutables.currentState.unwrap()) {
+        // add snapshot when Mutables.currentStateSnapshot is empty or Mutables.currentState is updated
+        if (Mutables.currentStateNode.hasValue()) {
+            var currentStateNode = Mutables.currentStateNode.unwrap();
+            var newStateNode = new LinkedNode(Mutables.currentState.unwrap());
+            currentStateNode.addNode(newStateNode);
+            Mutables.currentStateNode = Option.of(newStateNode);
+        }
+        else {
+            Mutables.currentStateNode = Option.of(new LinkedNode(Mutables.currentState.unwrap()));
+        }
+        Mutables.currentSnapshot = Option.of(Mutables.currentState.unwrap());
+    }
 }

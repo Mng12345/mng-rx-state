@@ -7,8 +7,9 @@ import { Option } from 'mng-easy-util/cjs/options'
 class Mutables {
   static timeTraveling = false
   static initDone = false
-  static currentState = Option.empty<LinkedNode<Map<string, any>>>()
-  static doSnapshot = false
+  static currentStateNode = Option.empty<LinkedNode<Map<string, any>>>()
+  static currentState = Option.empty<Map<string, any>>()
+  static currentSnapshot = Option.empty<Map<string, any>>()
 }
 
 class Immutables {
@@ -43,21 +44,21 @@ function getAllStatesInMap(): [string, BehaviorSubject<any>][] {
 
 // time travel!
 export function goPast() {
-  if (Mutables.currentState.hasValue()) {
-    const currentState = Mutables.currentState.unwrap()
+  if (Mutables.currentStateNode.hasValue()) {
+    const currentState = Mutables.currentStateNode.unwrap()
     const prevState = currentState.prev
     if (prevState !== null) {
-      Mutables.currentState = Option.of(prevState)
+      Mutables.currentStateNode = Option.of(prevState)
       Immutables.stateChangeFromUser$.next(false)
     }
   }
 }
 export function goFuture() {
-  if (Mutables.currentState.hasValue()) {
-    const currentState = Mutables.currentState.unwrap()
+  if (Mutables.currentStateNode.hasValue()) {
+    const currentState = Mutables.currentStateNode.unwrap()
     const nextState = currentState.next
     if (nextState !== null) {
-      Mutables.currentState = Option.of(nextState)
+      Mutables.currentStateNode = Option.of(nextState)
       Immutables.stateChangeFromUser$.next(false)
     }
   }
@@ -77,24 +78,14 @@ export function init() {
       // if state is under time traveling, skip this observer
       if (Mutables.timeTraveling) return
       // update currentState
-      const newCurrentState = new LinkedNode(new Map<string, any>())
+      const newCurrentState = new Map<string, any>()
       const timeTravelValues = values.slice(0, values.length - 1)
       const stateChangeFromUser = values[values.length - 1] as boolean
       if (stateChangeFromUser) {
         timeTravelValues.forEach((value: any, index: number) => {
-          newCurrentState.value.set(timeTravelStates[index][0], value)
+          newCurrentState.set(timeTravelStates[index][0], value)
         })
-        if (Mutables.doSnapshot) {
-          if (Mutables.currentState.hasValue()) {
-            const currentState = Mutables.currentState.unwrap()
-            currentState.addNode(newCurrentState)
-            Mutables.currentState = Option.of(newCurrentState)
-          } else {
-            Mutables.currentState = Option.of(newCurrentState)
-          }
-          // stop doing snapshot
-          Mutables.doSnapshot = false
-        }
+        Mutables.currentState = Option.of(newCurrentState)
         // notify timeTravelMachineState, make sure that the init is done
         if (Mutables.initDone) {
           travelMachineState.$.next({
@@ -106,8 +97,8 @@ export function init() {
         // start time travel
         Mutables.timeTraveling = true
         // state change from time travel
-        if (Mutables.currentState.hasValue()) {
-          const entries = Mutables.currentState.unwrap().value.entries()
+        if (Mutables.currentStateNode.hasValue()) {
+          const entries = Mutables.currentStateNode.unwrap().value.entries()
           for (let index = 0; ; index++) {
             const entry = entries.next()
             if (entry.done) break
@@ -123,10 +114,10 @@ export function init() {
         // end time travel
         Mutables.timeTraveling = false
         // update timeTravelMachineState when call goPast or goFuture
-        if (Mutables.currentState.hasValue()) {
+        if (Mutables.currentStateNode.hasValue()) {
           travelMachineState.$.next({
-            canGoToFuture: Mutables.currentState.unwrap().next !== null,
-            canGoToPast: Mutables.currentState.unwrap().prev !== null,
+            canGoToFuture: Mutables.currentStateNode.unwrap().next !== null,
+            canGoToPast: Mutables.currentStateNode.unwrap().prev !== null,
           })
         }
       }
@@ -283,5 +274,20 @@ export function useLocalObservable<T>(initState: T): [BehaviorSubject<T>, T, Rea
 }
 
 export function snapshot() {
-  Mutables.doSnapshot = true
+  // exit when undering time traveling or Mutables.currentState is empty
+  if (Mutables.timeTraveling || Mutables.currentState.isEmpty()) {
+    return
+  }
+  if (Mutables.currentSnapshot.isEmpty() || Mutables.currentSnapshot.unwrap() !== Mutables.currentState.unwrap()) {
+    // add snapshot when Mutables.currentStateSnapshot is empty or Mutables.currentState is updated
+    if (Mutables.currentStateNode.hasValue()) {
+      const currentStateNode = Mutables.currentStateNode.unwrap()
+      const newStateNode = new LinkedNode(Mutables.currentState.unwrap())
+      currentStateNode.addNode(newStateNode)
+      Mutables.currentStateNode = Option.of(newStateNode)
+    } else {
+      Mutables.currentStateNode = Option.of(new LinkedNode(Mutables.currentState.unwrap()))
+    }
+    Mutables.currentSnapshot = Option.of(Mutables.currentState.unwrap())
+  }
 }
